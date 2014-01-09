@@ -1,7 +1,7 @@
 ﻿namespace WebNotifier
 {
     using System.Windows;
-    using d2jsp;
+    using D2jsp;
 
     public partial class MainWindow
     {

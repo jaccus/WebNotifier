@@ -1,4 +1,4 @@
-﻿namespace WebNotifier.d2jsp
+﻿namespace WebNotifier.D2jsp
 {
     using System.Threading;
     using System.Windows;

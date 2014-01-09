@@ -64,9 +64,9 @@
     <Compile Include="CuteBalloon.xaml.cs">
       <DependentUpon>CuteBalloon.xaml</DependentUpon>
     </Compile>
-    <Compile Include="d2jsp\StatusUpdater.cs" />
+    <Compile Include="D2jsp\StatusUpdater.cs" />
     <Compile Include="WebNotifierException.cs" />
-    <Compile Include="d2jsp\D2jspProcessor.cs" />
+    <Compile Include="D2jsp\D2jspProcessor.cs" />
     <Page Include="CuteBalloon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
