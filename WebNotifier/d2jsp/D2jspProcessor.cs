@@ -22,23 +22,6 @@
             return this.ReadInboxUnreadCountWithHttpRequest();
         }
 
-        private int ReadInboxUnreadCountWithHttpRequest()
-        {
-            this.CreateHttpRequest();
-
-            var htmlContent = ReadResponseHtmlContent(this.GetHttpResponse());
-
-            return ParseHtmlForInboundUnreadCount(htmlContent);
-        }
-
-        private void CreateHttpRequest()
-        {
-            this.webRequest = (HttpWebRequest)WebRequest.Create(InboxUriString);
-
-            // Will use login cookie from Internet Explorer to access secured website.
-            this.webRequest.Headers["Cookie"] = GetLoginCookie();
-        }
-
         private static string GetLoginCookie()
         {
             try
@@ -119,6 +102,23 @@
             var htmlDoc = new HtmlDocument();
             htmlDoc.Load(new StringReader(htmlContent));
             return htmlDoc;
+        }
+
+        private int ReadInboxUnreadCountWithHttpRequest()
+        {
+            this.CreateHttpRequest();
+
+            var htmlContent = ReadResponseHtmlContent(this.GetHttpResponse());
+
+            return ParseHtmlForInboundUnreadCount(htmlContent);
+        }
+
+        private void CreateHttpRequest()
+        {
+            this.webRequest = (HttpWebRequest)WebRequest.Create(InboxUriString);
+
+            // Will use login cookie from Internet Explorer to access secured website.
+            this.webRequest.Headers["Cookie"] = GetLoginCookie();
         }
 
         private HttpWebResponse GetHttpResponse()
