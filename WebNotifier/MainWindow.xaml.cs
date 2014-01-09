@@ -5,15 +5,11 @@
 
     public partial class MainWindow
     {
-        public static MainWindow Instance { get; set; }
-
-        public string TrayIconSource { get; set; }
-
-        private readonly StatusUpdater _statusUpdater = new StatusUpdater();
+        private readonly StatusUpdater statusUpdater = new StatusUpdater();
 
         public MainWindow()
         {
-            TrayIconSource = "Icons/Loading.ico";
+            this.TrayIconSource = "Icons/Loading.ico";
 
             InitializeComponent();
             
@@ -21,12 +17,16 @@
 
             WebNotifierIcon.DataContext = this;
 
-            _statusUpdater.Start();
+            this.statusUpdater.Start();
         }
+
+        public static MainWindow Instance { get; set; }
+
+        public string TrayIconSource { get; set; }
 
         private void LoginActionCicked(object sender, RoutedEventArgs e)
         {
-            ShowBalloonTip();
+            this.ShowBalloonTip();
         }
 
         private void ExitActionClicked(object sender, RoutedEventArgs e)

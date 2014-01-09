@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace WebNotifier
+﻿namespace WebNotifier
 {
+    using System;
+
     internal class WebNotifierException : Exception
     {
         public WebNotifierException(string msg) : base(msg)

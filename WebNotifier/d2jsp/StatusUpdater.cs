@@ -1,12 +1,11 @@
-﻿using System.Windows;
-
-namespace WebNotifier.d2jsp
+﻿namespace WebNotifier.d2jsp
 {
     using System.Threading;
+    using System.Windows;
 
-    class StatusUpdater
+    internal class StatusUpdater
     {
-        private Thread _thread;
+        private Thread updaterThread;
 
         public void UpdateStatus()
         {
@@ -24,12 +23,12 @@ namespace WebNotifier.d2jsp
 
         public void Start()
         {
-            _thread = new Thread(UpdateStatus)
+            this.updaterThread = new Thread(this.UpdateStatus)
                 {
                     IsBackground = true
                 };
 
-            _thread.Start();
+            this.updaterThread.Start();
         }
     }
 }

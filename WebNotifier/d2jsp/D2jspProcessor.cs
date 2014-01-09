@@ -15,28 +15,28 @@
 
         private const string CookieReadFailedMessage = "Failed to read Internet Explorer cookie for URL: " + LoginUriString;
         
-        private HttpWebRequest _request;
+        private HttpWebRequest webRequest;
 
         public int ReadInboxUnreadCount()
         {
-            return ReadInboxUnreadCountWithHttpRequest();
+            return this.ReadInboxUnreadCountWithHttpRequest();
         }
 
         private int ReadInboxUnreadCountWithHttpRequest()
         {
-            CreateHttpRequest();
+            this.CreateHttpRequest();
 
-            var htmlContent = ReadResponseHtmlContent(GetHttpResponse());
+            var htmlContent = ReadResponseHtmlContent(this.GetHttpResponse());
 
             return ParseHtmlForInboundUnreadCount(htmlContent);
         }
 
         private void CreateHttpRequest()
         {
-            _request = (HttpWebRequest) WebRequest.Create(InboxUriString);
+            this.webRequest = (HttpWebRequest)WebRequest.Create(InboxUriString);
 
             // Will use login cookie from Internet Explorer to access secured website.
-            _request.Headers["Cookie"] = GetLoginCookie();
+            this.webRequest.Headers["Cookie"] = GetLoginCookie();
         }
 
         private static string GetLoginCookie()
@@ -67,12 +67,6 @@
             }
         }
 
-        private HttpWebResponse GetHttpResponse()
-        {
-            var response = (HttpWebResponse) _request.GetResponse();
-            return response;
-        }
-
         private static int ParseHtmlForInboundUnreadCount(string htmlContent)
         {
             var htmlDocument = CreateHtmlDocumentFromContent(htmlContent);
@@ -80,16 +74,16 @@
             // Inbox HTML part that we parse for unread msg count is message table element <mLT>.
             var msgTableElement = htmlDocument.GetElementbyId("mLT");
 
-            //var messageTableContent = msgTableElement.OuterHtml;
-            //File.WriteAllText(@"D:\jsp.html", messageTableContent);
-
             var unreadCount = 0;
 
             // Subject of an unread message is bold <b>Subject</b>, use that to count unread msgs.
             foreach (var tag in msgTableElement.ChildNodes)
             {
                 // Ignore non-tr tags and column row (detected by <th> child tag).
-                if (!IsTrTag(tag) || IsColumnRowElement(tag)) continue;
+                if (!IsTrTag(tag) || IsColumnRowElement(tag))
+                {
+                    continue;
+                }
 
                 // Subject column - 3rd or 4th column (second last).
                 var secondLastIndex = tag.ChildNodes.Count - 2;
@@ -125,6 +119,11 @@
             var htmlDoc = new HtmlDocument();
             htmlDoc.Load(new StringReader(htmlContent));
             return htmlDoc;
+        }
+
+        private HttpWebResponse GetHttpResponse()
+        {
+            return (HttpWebResponse)this.webRequest.GetResponse();
         }
     }
 }
